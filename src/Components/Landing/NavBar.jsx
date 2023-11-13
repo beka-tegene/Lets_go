@@ -91,7 +91,7 @@ const NavBar = () => {
                   "&:hover": { background: "#DBE2EF", color: "#112D4E" },
                 }}
               >
-                <ListItemText primary="Flight" />
+                <ListItemText primary="Booking" />
               </ListItem>
               <ListItem
                 sx={{
@@ -99,7 +99,7 @@ const NavBar = () => {
                   "&:hover": { background: "#DBE2EF", color: "#112D4E" },
                 }}
               >
-                <ListItemText primary="Hotel" />
+                <ListItemText primary="Get the app" />
               </ListItem>
               <ListItem
                 sx={{
@@ -107,7 +107,7 @@ const NavBar = () => {
                   "&:hover": { background: "#DBE2EF", color: "#112D4E" },
                 }}
               >
-                <ListItemText primary="Car" />
+                <ListItemText primary="help" />
               </ListItem>
               <ListItem
                 sx={{
@@ -115,14 +115,16 @@ const NavBar = () => {
                   "&:hover": { background: "#DBE2EF", color: "#112D4E" },
                 }}
               >
-                <ListItemText primary="Package" />
+                <ListItemText primary="En" />
               </ListItem>
               <ListItem>
                 <ListItemButton
                   sx={{
-                    background: "#142261",
-                    borderRadius: 2,
-                    color: "#FFFFFF",
+                    background: "transparent",
+                    border: "1px solid #142261",
+                    borderRadius: 1,
+                    width: 90,
+                    color: "#142261",
                     "&:hover": { background: "#DBE2EF", color: "#112D4E" },
                   }}
                 >
@@ -159,7 +161,7 @@ const NavBar = () => {
               "&:hover": { color: "#3F72AF" },
             }}
           >
-            <ListItemText primary="Flight" />
+            <ListItemText primary="Booking" />
           </ListItem>
           <ListItem
             sx={{
@@ -167,7 +169,7 @@ const NavBar = () => {
               "&:hover": { color: "#3F72AF" },
             }}
           >
-            <ListItemText primary="Hotel" />
+            <ListItemText primary="Get the app" sx={{ width: 100 }} />
           </ListItem>
           <ListItem
             sx={{
@@ -175,7 +177,7 @@ const NavBar = () => {
               "&:hover": { color: "#3F72AF" },
             }}
           >
-            <ListItemText primary="Car" />
+            <ListItemText primary="help" />
           </ListItem>
           <ListItem
             sx={{
@@ -183,15 +185,16 @@ const NavBar = () => {
               "&:hover": { color: "#3F72AF" },
             }}
           >
-            <ListItemText primary="Package" />
+            <ListItemText primary="En" />
           </ListItem>
           <ListItem>
             <ListItemButton
               sx={{
-                background: "#142261",
+                background: "transparent",
+                border: "1px solid #142261",
                 borderRadius: 1,
-                width:90,
-                color: "#FFFFFF",
+                width: 90,
+                color: "#142261",
                 "&:hover": { background: "#DBE2EF", color: "#112D4E" },
               }}
             >
@@ -203,7 +206,7 @@ const NavBar = () => {
               sx={{
                 background: "#142261",
                 borderRadius: 1,
-                width:90,
+                width: 90,
                 color: "#FFFFFF",
                 "&:hover": { background: "#DBE2EF", color: "#112D4E" },
               }}

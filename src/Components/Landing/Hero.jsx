@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   FormControl,
+  FormControlLabel,
   Grid,
   ImageListItem,
   Input,
@@ -9,6 +10,8 @@ import {
   InputLabel,
   MenuItem,
   Paper,
+  Radio,
+  RadioGroup,
   Select,
   Stack,
   Typography,
@@ -70,24 +73,12 @@ const Hero = () => {
             <Button
               sx={{
                 flex: 1,
-                background: tripForm ? "" : "#112D4E",
+                background: "#112D4E",
                 color: "#FFFFFF",
                 borderRadius: 0,
               }}
-              onClick={() => setTripForm(true)}
             >
-              Round Trip
-            </Button>
-            <Button
-              sx={{
-                flex: 1,
-                color: "#FFFFFF",
-                background: tripForm ? "#112D4E" : "",
-                borderRadius: 0,
-              }}
-              onClick={() => setTripForm(false)}
-            >
-              One Way
+              Flight
             </Button>
             <Button
               sx={{
@@ -97,8 +88,88 @@ const Hero = () => {
                 borderRadius: 0,
               }}
             >
-              Multi City
+              Cars
             </Button>
+            <Button
+              sx={{
+                flex: 1,
+                color: "#FFFFFF",
+                background: "#112D4E",
+                borderRadius: 0,
+              }}
+            >
+              Hotel
+            </Button>
+            <Button
+              sx={{
+                flex: 1,
+                color: "#FFFFFF",
+                background: "#112D4E",
+                borderRadius: 0,
+              }}
+            >
+              Tours
+            </Button>
+            <Button
+              sx={{
+                flex: 1,
+                color: "#FFFFFF",
+                background: "#112D4E",
+                borderRadius: 0,
+              }}
+            >
+              Package
+            </Button>
+          </Stack>
+          <Stack>
+            <RadioGroup
+              name="controlled-radio-buttons-group"
+              row
+              value={tripForm}
+              sx={{ pt: 2, pl: 4 }}
+            >
+              <FormControlLabel
+                value={true}
+                control={<Radio />}
+                label="Round Trip"
+                onClick={() => setTripForm(true)}
+                sx={{
+                  "& .MuiSvgIcon-root": {
+                    fontSize: 14,
+                  },
+                  "& .MuiTypography-root": {
+                    fontSize: 14,
+                  },
+                }}
+              />
+              <FormControlLabel
+                value={false}
+                control={<Radio />}
+                label="One Way"
+                onClick={() => setTripForm(false)}
+                sx={{
+                  "& .MuiSvgIcon-root": {
+                    fontSize: 14,
+                  },
+                  "& .MuiTypography-root": {
+                    fontSize: 14,
+                  },
+                }}
+              />
+              <FormControlLabel
+                control={<Radio />}
+                label="Multi City"
+                value={"1"}
+                sx={{
+                  "& .MuiSvgIcon-root": {
+                    fontSize: 14,
+                  },
+                  "& .MuiTypography-root": {
+                    fontSize: 14,
+                  },
+                }}
+              />
+            </RadioGroup>
           </Stack>
           <Grid
             container
