@@ -1,9 +1,17 @@
 import { Card, Grid, Stack, Typography } from "@mui/material";
-import React from "react";
-import SearchFilter from "./SearchFilter";
-import SearchCard from "./SearchCard";
+import React, { useState } from "react";
+import SearchDepartingFilter from "./SearchDepartingFilter";
+import SearchDepartingCard from "./SearchDepartingCard";
+import SelectDepartingFlight from "./SelectDepartingFlight";
 
-const SearchFlight = () => {
+const SearchDepartingFlight = () => {
+  const [selectFlight, setSelectFlight] = useState(false);
+  const setSelectFlightHandler = () => {
+    setSelectFlight(true);
+  };
+  const selectFlightHandler = () => {
+    setSelectFlight(false);
+  };
   return (
     <Stack
       direction={{ xs: "column", md: "row" }}
@@ -12,11 +20,17 @@ const SearchFlight = () => {
       gap={4}
       sx={{ padding: { xs: "0.5rem 5%", md: "0.5rem 3%" } }}
     >
-      <SearchFilter />
+      <SearchDepartingFilter />
       <Grid container spacing={2} sx={{ width: { xs: "100%", md: "60%" } }}>
-        <SearchCard />
-        <SearchCard />
-        <SearchCard />
+        <SearchDepartingCard
+          setSelectFlightHandler={() => setSelectFlightHandler()}
+        />
+        <SearchDepartingCard
+          setSelectFlightHandler={() => setSelectFlightHandler()}
+        />
+        <SearchDepartingCard
+          setSelectFlightHandler={() => setSelectFlightHandler()}
+        />
         <Grid item xs={12}>
           <Card
             sx={{
@@ -61,13 +75,27 @@ const SearchFlight = () => {
             </Stack>
           </Card>
         </Grid>
-        <SearchCard />
-        <SearchCard />
-        <SearchCard />
-        <SearchCard />
+        <SearchDepartingCard
+          setSelectFlightHandler={() => setSelectFlightHandler()}
+        />
+        <SearchDepartingCard
+          setSelectFlightHandler={() => setSelectFlightHandler()}
+        />
+        <SearchDepartingCard
+          setSelectFlightHandler={() => setSelectFlightHandler()}
+        />
+        <SearchDepartingCard
+          setSelectFlightHandler={() => setSelectFlightHandler()}
+        />
       </Grid>
+      {selectFlight && (
+        <SelectDepartingFlight
+          toggleDrawer={selectFlightHandler}
+          state={selectFlight}
+        />
+      )}
     </Stack>
   );
 };
 
-export default SearchFlight;
+export default SearchDepartingFlight;

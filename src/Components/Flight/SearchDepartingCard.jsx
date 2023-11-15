@@ -1,7 +1,7 @@
-import { Card, CardContent, Grid, Stack, Typography } from "@mui/material";
+import { Card, Grid, Stack, Typography } from "@mui/material";
 import React from "react";
 import logos from "../../Images/logo.png";
-const SearchCard = () => {
+const SearchDepartingCard = (props) => {
   return (
     <Grid item xs={12}>
       <Card
@@ -16,6 +16,7 @@ const SearchCard = () => {
             transform: "scale(.998)",
           },
         }}
+        onClick={() => props.setSelectFlightHandler()}
       >
         <Stack
           direction={"row"}
@@ -51,4 +52,4 @@ const SearchCard = () => {
   );
 };
 
-export default SearchCard;
+export default SearchDepartingCard;

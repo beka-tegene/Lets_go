@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import React from "react";
 
-const SearchFilter = () => {
+const SearchDepartingFilter = () => {
   return (
     <Box sx={{ width: { xs: "100%", md: "20%" } }}>
       <Stack sx={{ display: { xs: "none", md: "flex" } }} gap={2}>
@@ -445,4 +445,4 @@ const SearchFilter = () => {
   );
 };
 
-export default SearchFilter;
+export default SearchDepartingFilter;

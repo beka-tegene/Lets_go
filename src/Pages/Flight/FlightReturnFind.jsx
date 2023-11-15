@@ -1,15 +1,15 @@
 import React from "react";
 import Layout from "../../Components/Landing/Layout";
 import Nav from "../../Components/Flight/Nav";
-import SearchFlight from "../../Components/Flight/SearchFlight";
+import SearchReturnFlight from "../../Components/Flight/SearchReturnFlight";
 
-const FlightFind = () => {
+const FlightReturnFind = () => {
   return (
     <Layout>
       <Nav />
-      <SearchFlight />
+      <SearchReturnFlight />
     </Layout>
   );
 };
 
-export default FlightFind;
+export default FlightReturnFind;

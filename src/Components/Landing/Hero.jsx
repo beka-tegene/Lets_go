@@ -27,8 +27,10 @@ import {
 } from "@mui/icons-material";
 import Destination from "../../Images/destination.png";
 import Country from "../../Images/country.png";
+import {  useNavigate } from "react-router-dom";
 const Hero = () => {
   const [tripForm, setTripForm] = useState(true);
+  const navigate = useNavigate()
   return (
     <Stack
       sx={{
@@ -310,6 +312,7 @@ const Hero = () => {
                   },
                 }}
                 type="submit"
+                onClick={() => navigate("/departing")}
               >
                 Find Flight
               </Button>
