@@ -11,8 +11,7 @@ import {
 } from "@mui/material";
 import React from "react";
 
-const SearchDepartingFilter = () => {
-  
+const SearchDepartingFilter = (props) => {
   return (
     <Box sx={{ width: { xs: "100%", md: "20%" } }}>
       <Stack sx={{ display: { xs: "none", md: "flex" } }} gap={2}>
@@ -37,6 +36,7 @@ const SearchDepartingFilter = () => {
               <FormControlLabel
                 control={<Checkbox />}
                 label="nonstop (1)"
+                name="nonstop (1)"
                 sx={{
                   "& .MuiSvgIcon-root": {
                     fontSize: 16,
@@ -45,6 +45,7 @@ const SearchDepartingFilter = () => {
                     fontSize: 14,
                   },
                 }}
+                onChange={(e) => props.SelectFilterData(e.target)}
               />
               <Typography>$800</Typography>
             </Stack>
@@ -56,6 +57,7 @@ const SearchDepartingFilter = () => {
               <FormControlLabel
                 control={<Checkbox />}
                 label="1 stop (14)"
+                name="1 stop (14)"
                 sx={{
                   "& .MuiSvgIcon-root": {
                     fontSize: 16,
@@ -64,6 +66,7 @@ const SearchDepartingFilter = () => {
                     fontSize: 14,
                   },
                 }}
+                onChange={(e) => props.SelectFilterData(e.target)}
               />
               <Typography>$800</Typography>
             </Stack>

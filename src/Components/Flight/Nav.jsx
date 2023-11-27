@@ -24,7 +24,6 @@ import {
   Select,
   Stack,
   Toolbar,
-  Typography,
 } from "@mui/material";
 import React from "react";
 import { useState } from "react";
@@ -104,7 +103,7 @@ const Nav = () => {
   return (
     <AppBar
       elevation={0}
-      sx={{ background: "#F9F7F7", p: 0.5, position: "sticky" }}
+      sx={{ background: "#F9F7F7", p: 0.5, position: "sticky",top:"10dvh" }}
     >
       <Divider sx={{ m: 1 }} />
       <Toolbar>
@@ -196,7 +195,12 @@ const Nav = () => {
                       </IconButton>
                     </Box>
                   </MenuItem>
-                  <MenuItem>
+                  <MenuItem
+                    sx={{
+                      cursor: "default",
+                      "&:hover": { background: "none" },
+                    }}
+                  >
                     <FormControl fullWidth>
                       <InputLabel>Children</InputLabel>
                       <Select
@@ -215,7 +219,13 @@ const Nav = () => {
                     </FormControl>
                   </MenuItem>
                   {Array.from({ length: numChildren }).map((_, index) => (
-                    <MenuItem key={index}>
+                    <MenuItem
+                      key={index}
+                      sx={{
+                        cursor: "default",
+                        "&:hover": { background: "none" },
+                      }}
+                    >
                       <FormControl fullWidth>
                         <InputLabel>{`Child ${index + 1} Age`}</InputLabel>
                         <Select
@@ -268,11 +278,11 @@ const Nav = () => {
           <Grid
             container
             spacing={2}
-            alignItems={"center"}
+            alignItems={"flex-end"}
             justifyContent={"space-between"}
             sx={{ p: 2 }}
           >
-            <Grid item xs={6} md={2.7}>
+            <Grid item xs={6} md={selectedOption !== "oneway" ? 2.7 : 3.4}>
               <FormControl variant="standard" fullWidth>
                 <InputLabel htmlFor="From">From</InputLabel>
                 <Input
@@ -296,7 +306,7 @@ const Nav = () => {
                 color: "#32667C",
               }}
             />
-            <Grid item xs={6} md={2.7}>
+            <Grid item xs={6} md={selectedOption !== "oneway" ? 2.7 : 3.4}>
               <FormControl variant="standard" fullWidth>
                 <InputLabel htmlFor="To">To</InputLabel>
                 <Input
@@ -313,24 +323,26 @@ const Nav = () => {
                 />
               </FormControl>
             </Grid>
-            <Grid item xs={4} md={2}>
-              <FormControl variant="standard" fullWidth>
-                <InputLabel htmlFor="departing">Departing</InputLabel>
-                <Input
-                  id="departing"
-                  startAdornment={
-                    <InputAdornment position="start">
-                      <FlightTakeoff sx={{ color: "#32667C" }} />
-                    </InputAdornment>
-                  }
-                  type="date"
-                  sx={{
-                    backgroundColor: "white",
-                  }}
-                />
-              </FormControl>
-            </Grid>
-            <Grid item xs={4} md={2}>
+            {selectedOption !== "oneway" && (
+              <Grid item xs={4} md={2}>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel htmlFor="departing">Departing</InputLabel>
+                  <Input
+                    id="departing"
+                    startAdornment={
+                      <InputAdornment position="start">
+                        <FlightTakeoff sx={{ color: "#32667C" }} />
+                      </InputAdornment>
+                    }
+                    type="date"
+                    sx={{
+                      backgroundColor: "white",
+                    }}
+                  />
+                </FormControl>
+              </Grid>
+            )}
+            <Grid item xs={4} md={selectedOption !== "oneway" ? 2 : 2.7}>
               <FormControl variant="standard" fullWidth>
                 <InputLabel htmlFor="returning">Returning</InputLabel>
                 <Input
