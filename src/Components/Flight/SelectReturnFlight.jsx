@@ -20,12 +20,13 @@ import {
 } from "@mui/material";
 import React from "react";
 import logos from "../../Images/logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SelectReturnFlight = (props) => {
+  const navigate = useNavigate();
   return (
     <Drawer
-      anchor={"right"}
+      anchor={"left"}
       open={props.state}
       onClose={() => props.toggleDrawer(false)}
       elevation={0}
@@ -134,6 +135,7 @@ const SelectReturnFlight = (props) => {
                   color: "#FFFFFF",
                 },
               }}
+              onClick={() => navigate("/display-select")}
               type="submit"
             >
               Select

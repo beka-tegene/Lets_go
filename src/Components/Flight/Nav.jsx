@@ -1,26 +1,106 @@
 import {
+  Add,
+  ArrowDropDown,
   FlightLand,
   FlightTakeoff,
   LocationOn,
+  Remove,
   SyncAlt,
 } from "@mui/icons-material";
 import {
   AppBar,
+  Box,
   Button,
   Divider,
   FormControl,
   Grid,
+  IconButton,
   Input,
   InputAdornment,
   InputLabel,
+  Menu,
+  MenuItem,
   Paper,
+  Select,
   Stack,
   Toolbar,
   Typography,
 } from "@mui/material";
 import React from "react";
+import { useState } from "react";
 
 const Nav = () => {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorEl1, setAnchorEl1] = useState(null);
+  const [selectedOption, setSelectedOption] = useState("roundtrip");
+  const [showTravelerInfo, setShowTravelerInfo] = useState(false);
+  const [numAdults, setNumAdults] = useState(1);
+  const [numChildren, setNumChildren] = useState(0);
+  const [childAges, setChildAges] = useState([]);
+  const [classAnchorEl, setClassAnchorEl] = useState(null);
+  const [selectedClass, setSelectedClass] = useState("First Class");
+
+  const handleClassClick = (event) => {
+    setClassAnchorEl(event.currentTarget);
+  };
+
+  const handleClassClose = () => {
+    setClassAnchorEl(null);
+  };
+
+  const handleClassSelect = (travelClass) => {
+    setSelectedClass(travelClass);
+    handleClassClose();
+  };
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+    setAnchorEl1(null);
+  };
+
+  const handleOptionSelect = (option) => {
+    setSelectedOption(option);
+    handleClose();
+  };
+
+  const handleTravelerClick = (event) => {
+    setAnchorEl1(event.currentTarget);
+    setShowTravelerInfo(true);
+  };
+
+  const handleNumAdultsChange = (increment) => {
+    setNumAdults((prevNum) => Math.max(1, prevNum + increment));
+  };
+
+  const handleNumChildrenChange = (event) => {
+    const newNumChildren = event.target.value;
+    setNumChildren(newNumChildren);
+    setChildAges(Array.from({ length: newNumChildren }, () => ""));
+  };
+
+  const handleChildAgeChange = (index, value) => {
+    const updatedChildAges = [...childAges];
+    updatedChildAges[index] = value;
+    setChildAges(updatedChildAges);
+  };
+
+  const getLinkText = () => {
+    switch (selectedClass) {
+      case "economy":
+        return "Economy";
+      case "business":
+        return "Business";
+      case "firstClass":
+        return "First Class";
+      default:
+        return "First Class";
+    }
+  };
+
+  const totalTravelers = numAdults + numChildren;
   return (
     <AppBar
       elevation={0}
@@ -39,10 +119,151 @@ const Nav = () => {
             justifyContent={"flex-start"}
             gap={2}
           >
-            <Typography>roundtrip</Typography>
-            <Typography>1 traveler</Typography>
-            <Typography>Economy</Typography>
-            <Typography>Any Airline</Typography>
+            <div>
+              <Button
+                aria-controls="flight-options-menu"
+                aria-haspopup="true"
+                onClick={handleClick}
+              >
+                {selectedOption === "roundtrip" ? "Round Trip" : "One Way"}{" "}
+                <ArrowDropDown />
+              </Button>
+              <Menu
+                id="flight-options-menu"
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={() => handleOptionSelect("roundtrip")}>
+                  Round Trip
+                </MenuItem>
+                <MenuItem onClick={() => handleOptionSelect("oneway")}>
+                  One Way
+                </MenuItem>
+              </Menu>
+            </div>
+            <Box>
+              <Button onClick={handleTravelerClick}>
+                {totalTravelers}{" "}
+                {totalTravelers === 1 ? "Traveler" : "Travelers"}{" "}
+                <ArrowDropDown />
+              </Button>
+              {showTravelerInfo && (
+                <Menu
+                  id="traveler-menu"
+                  anchorEl={anchorEl1}
+                  open={showTravelerInfo}
+                  onClose={() => {
+                    handleClose();
+                    setShowTravelerInfo(false);
+                  }}
+                >
+                  <MenuItem
+                    sx={{
+                      width: 250,
+                      display: "flex",
+                      justifyContent: "space-between",
+                      cursor: "default",
+                      "&:hover": { background: "none" },
+                      gap: 2,
+                    }}
+                  >
+                    <FormControl fullWidth>
+                      <InputLabel>Adults</InputLabel>
+                      <Select
+                        value={numAdults}
+                        label={"Adults"}
+                        onChange={() => {}}
+                        displayEmpty
+                        size="small"
+                      >
+                        {[...Array(10).keys()].map((num) => (
+                          <MenuItem key={num} value={num + 1}>
+                            {num + 1}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                    <Box>
+                      <IconButton onClick={() => handleNumAdultsChange(1)}>
+                        <Add />
+                      </IconButton>
+                      <IconButton
+                        onClick={() => handleNumAdultsChange(-1)}
+                        disabled={numAdults === 1}
+                      >
+                        <Remove />
+                      </IconButton>
+                    </Box>
+                  </MenuItem>
+                  <MenuItem>
+                    <FormControl fullWidth>
+                      <InputLabel>Children</InputLabel>
+                      <Select
+                        value={numChildren}
+                        label={"Children"}
+                        onChange={handleNumChildrenChange}
+                        displayEmpty
+                        size="small"
+                      >
+                        {[...Array(8).keys()].map((num) => (
+                          <MenuItem key={num} value={num}>
+                            {num}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </MenuItem>
+                  {Array.from({ length: numChildren }).map((_, index) => (
+                    <MenuItem key={index}>
+                      <FormControl fullWidth>
+                        <InputLabel>{`Child ${index + 1} Age`}</InputLabel>
+                        <Select
+                          value={childAges[index]}
+                          label={`Child ${index + 1} Age`}
+                          onChange={(event) =>
+                            handleChildAgeChange(index, event.target.value)
+                          }
+                          displayEmpty
+                          size="small"
+                        >
+                          {[...Array(17).keys()].map((age) => (
+                            <MenuItem key={age} value={age + 1}>
+                              {age + 1}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    </MenuItem>
+                  ))}
+                </Menu>
+              )}
+            </Box>
+            <Box>
+              <Button
+                aria-controls="class-options-menu"
+                aria-haspopup="true"
+                onClick={handleClassClick}
+              >
+                {getLinkText()} <ArrowDropDown />
+              </Button>
+              <Menu
+                id="class-options-menu"
+                anchorEl={classAnchorEl}
+                open={Boolean(classAnchorEl)}
+                onClose={handleClassClose}
+              >
+                <MenuItem onClick={() => handleClassSelect("firstClass")}>
+                  First Class
+                </MenuItem>
+                <MenuItem onClick={() => handleClassSelect("business")}>
+                  Business
+                </MenuItem>
+                <MenuItem onClick={() => handleClassSelect("economy")}>
+                  Economy
+                </MenuItem>
+              </Menu>
+            </Box>
           </Stack>
           <Grid
             container

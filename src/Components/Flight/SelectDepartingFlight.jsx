@@ -26,7 +26,7 @@ const SelectDepartingFlight = (props) => {
   const navigate = useNavigate();
   return (
     <Drawer
-      anchor={"right"}
+      anchor={"left"}
       open={props.state}
       onClose={() => props.toggleDrawer(false)}
       elevation={0}

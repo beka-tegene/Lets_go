@@ -12,6 +12,7 @@ import {
 import React from "react";
 
 const SearchDepartingFilter = () => {
+  
   return (
     <Box sx={{ width: { xs: "100%", md: "20%" } }}>
       <Stack sx={{ display: { xs: "none", md: "flex" } }} gap={2}>
