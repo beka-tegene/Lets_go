@@ -4,6 +4,7 @@ import {
   FormControl,
   FormControlLabel,
   Grid,
+  IconButton,
   ImageListItem,
   Input,
   InputAdornment,
@@ -27,10 +28,117 @@ import {
 } from "@mui/icons-material";
 import Destination from "../../Images/destination.png";
 import Country from "../../Images/country.png";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import airports from "../active_airports.json";
+import Autosuggest from "react-autosuggest";
+
+const getSuggestions = (value) => {
+  const inputValue = value.trim().toLowerCase();
+  const inputLength = inputValue.length;
+
+  return inputLength === 0
+    ? []
+    : airports.filter(
+        (airport) =>
+          (airport.iata && airport.iata.toLowerCase().includes(inputValue)) ||
+          (airport.name && airport.name.toLowerCase().includes(inputValue))
+      );
+};
+
+const getSuggestionValue = (suggestion) =>
+  `${suggestion.name} (${suggestion.iata})`;
+
+const renderSuggestion = (suggestion) => (
+  <div>{`${suggestion.name} (${suggestion.iata})`}</div>
+);
+
 const Hero = () => {
+  const [fromValue, setFromValue] = useState("");
+  const [toValue, setToValue] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+
+  const onSuggestionsFetchRequested = ({ value }) => {
+    setSuggestions(getSuggestions(value));
+  };
+
+  const onSuggestionsClearRequested = () => {
+    setSuggestions([]);
+  };
+
+  const onSuggestionSelected = (inputType, _, { suggestion }) => {
+    const suggestionText = `${suggestion.name} (${suggestion.iata})`;
+    if (inputType === "from") {
+      setFromValue(suggestionText);
+    } else if (inputType === "to") {
+      setToValue(suggestionText);
+    }
+  };
+
+  const inputToProps = {
+    placeholder: "To",
+    value: toValue,
+    onChange: (_, { newValue }) => {
+      setToValue(newValue);
+    },
+    type: "text",
+    style: {
+      backgroundColor: "transparent",
+      width: "100%",
+      border: "none",
+      outline: "none",
+      fontSize: "16px",
+    },
+  };
+  const inputFromProps = {
+    placeholder: "From",
+    value: fromValue,
+    onChange: (_, { newValue }) => {
+      setFromValue(newValue);
+    },
+    type: "text",
+    style: {
+      backgroundColor: "transparent",
+      width: "100%",
+      border: "none",
+      outline: "none",
+      fontSize: "16px",
+    },
+    autoFocus: true,
+  };
+  const theme = {
+    container: {
+      position: "relative",
+      width: "100%",
+    },
+    suggestionsContainerOpen: {
+      position: "absolute",
+      top: "25px",
+      zIndex: 1,
+      left: 0,
+      right: 0,
+      maxHeight: "200px",
+      overflowY: "auto",
+    },
+    suggestion: {
+      display: "block",
+      padding: "10px",
+      borderBottom: "1px solid #e0e0e0",
+      cursor: "pointer",
+      backgroundColor: "#fff",
+      color: "#000",
+    },
+    suggestionHighlighted: {
+      backgroundColor: "#f0f0f0",
+      color: "#0f0f0f",
+    },
+  };
+  const swapFromToValues = () => {
+    const temp = fromValue;
+    setFromValue(toValue);
+    setToValue(temp);
+  };
   const [tripForm, setTripForm] = useState(true);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   return (
     <Stack
       sx={{
@@ -182,43 +290,70 @@ const Hero = () => {
           >
             <Grid item xs={12} md={5.5}>
               <FormControl variant="standard" fullWidth>
-                <InputLabel htmlFor="From">From</InputLabel>
-                <Input
-                  id="From"
-                  startAdornment={
-                    <InputAdornment position="start">
-                      <LocationOn sx={{ color: "#32667C" }} />
-                    </InputAdornment>
-                  }
-                  type="text"
-                  sx={{
-                    backgroundColor: "white",
-                  }}
-                />
+                <Typography sx={{ color: "#FFFFFF", fontSize: "12px" }}>
+                  From
+                </Typography>
+                <Stack
+                  direction={"row"}
+                  alignItems={"center"}
+                  justifyContent={"flex-start"}
+                  sx={{ backgroundColor: "white", padding: ".5rem 0" }}
+                >
+                  <InputAdornment position="start">
+                    <LocationOn sx={{ color: "#32667C" }} />
+                  </InputAdornment>
+                  <Autosuggest
+                    suggestions={suggestions}
+                    onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+                    onSuggestionsClearRequested={onSuggestionsClearRequested}
+                    onSuggestionSelected={(_, data) =>
+                      onSuggestionSelected("from", _, data)
+                    }
+                    getSuggestionValue={getSuggestionValue}
+                    renderSuggestion={renderSuggestion}
+                    inputProps={inputFromProps}
+                    theme={theme}
+                  />
+                </Stack>
               </FormControl>
             </Grid>
-            <SyncAlt
+            <IconButton
+              onClick={swapFromToValues}
               sx={{
                 display: { xs: "none", md: "block" },
                 mt: 4,
                 color: "#32667C",
               }}
-            />
+            >
+              <SyncAlt />
+            </IconButton>
             <Grid item xs={12} md={5.5}>
               <FormControl variant="standard" fullWidth>
-                <InputLabel htmlFor="To">To</InputLabel>
-                <Input
-                  id="To"
-                  startAdornment={
-                    <InputAdornment position="start">
-                      <LocationOn sx={{ color: "#32667C" }} />
-                    </InputAdornment>
-                  }
-                  type="text"
-                  sx={{
-                    backgroundColor: "white",
-                  }}
-                />
+                <Typography sx={{ color: "#FFFFFF", fontSize: "12px" }}>
+                  To
+                </Typography>
+                <Stack
+                  direction={"row"}
+                  alignItems={"center"}
+                  justifyContent={"flex-start"}
+                  sx={{ backgroundColor: "white", padding: ".5rem 0" }}
+                >
+                  <InputAdornment position="start">
+                    <LocationOn sx={{ color: "#32667C" }} />
+                  </InputAdornment>
+                  <Autosuggest
+                    suggestions={suggestions}
+                    onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+                    onSuggestionsClearRequested={onSuggestionsClearRequested}
+                    onSuggestionSelected={(_, data) =>
+                      onSuggestionSelected("to", _, data)
+                    }
+                    getSuggestionValue={getSuggestionValue}
+                    renderSuggestion={renderSuggestion}
+                    inputProps={inputToProps}
+                    theme={theme}
+                  />
+                </Stack>
               </FormControl>
             </Grid>
             <Grid item xs={12} md={tripForm ? 3 : 4}>
