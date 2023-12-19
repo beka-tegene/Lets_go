@@ -1,7 +1,8 @@
 import axios from "axios";
 
 export const searchFlights = async (data) => {
-  //
+  axios.defaults.withCredentials = true;
+  
   const response = await axios.get(
     `http://localhost:5000/api/v1/flightrapid/search-flights`,
     {
@@ -18,7 +19,8 @@ export const searchFlights = async (data) => {
 
 
 export const searchFlightsMultiStops = async (data) => {
-  //
+  axios.defaults.withCredentials = true;
+  
   const response = await axios.get(
     `http://localhost:5000/api/v1/flightrapid/search-flights-multi-stops`,
     {
@@ -34,8 +36,9 @@ export const searchFlightsMultiStops = async (data) => {
 };
 
 
-export const getFlightDetails = async (data) => {
-  //
+export const getFlightDetails = async (data) => { 
+  axios.defaults.withCredentials = true;
+
   const response = await axios.get(
     `http://localhost:5000/api/v1/flightrapid/get-flight-details`,
     {
@@ -52,7 +55,8 @@ export const getFlightDetails = async (data) => {
 
 
 export const getMinPrice= async (data) => {
-  //
+  axios.defaults.withCredentials = true;
+  
   const response = await axios.get(
     `http://localhost:5000/api/v1/flightrapid/getminprice`,
     {
@@ -68,7 +72,8 @@ export const getMinPrice= async (data) => {
 };
 
 export const getMinPriceMultiStops = async (data) => {
-  //
+  axios.defaults.withCredentials = true;
+  
   const response = await axios.get(
     `http://localhost:5000/api/v1/flightrapid/getminpricemultistops`,
     {
@@ -80,5 +85,18 @@ export const getMinPriceMultiStops = async (data) => {
     return response.data;
   } else {
     throw new Error("Failed to fetch legal documents");
+  }
+};
+
+
+
+export const getAllFlightDetails = async (data) => {
+  axios.defaults.withCredentials = true;
+  const response = await axios.get(`/api/v1/flightrapid/getall-flight-details`);
+
+  if (response.status === 200) {
+    return response.data;
+  } else {
+    throw new Error("Failed to fetch recipes");
   }
 };
